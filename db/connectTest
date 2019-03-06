@@ -1,0 +1,3 @@
+#! /bin/bash
+
+psql -h srv04 -d NPTTest

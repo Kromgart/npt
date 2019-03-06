@@ -1,0 +1,12 @@
+cabal-sandbox
+
+**/cabal.sandbox.config
+**/dist
+
+**/*.swp
+**/*.swo
+
+**/*.vscode
+**/*.idea
+
+**/*.log

@@ -1,0 +1,16 @@
+{
+  "database" : {
+    "host"     : "srv04",
+    "port"     : 5432,
+    "login"    : "npt",
+    "password" : "aoeu',.p",
+    "database" : "NPT1"
+  },
+
+  "bamboohr": {
+    "hostname"  : "api.bamboohr.com",
+    "company"   : "companyname",
+    "authToken" : "Basic ABCmYjkzMWFmZDA3MzcxYzAwYzBmDjdjMTNiNDExOTE2OGQwY2ZhYjp4",
+    "__authTokenPlain": "0123456789abcdef0123456789abcdef01234567 : x"
+  }
+}

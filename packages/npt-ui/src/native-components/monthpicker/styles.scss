@@ -1,0 +1,13 @@
+@import '../../styles/_variables';
+@import '../../styles/utils/mixins/simple-arrow';
+@import '../../styles/blocks';
+@import '~bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
+
+.datepicker-dropdown {
+    position: absolute;
+
+    background-color: $bg-base-white;
+    .active {
+        background: $bg-highlight !important;
+    }
+}

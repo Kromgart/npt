@@ -1,0 +1,44 @@
+#! /bin/bash
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+SCRIPT_PATH=$(realpath ${0%/*})
+OUTPUTDIR="$1"
+
+if [ -z "$OUTPUTDIR" ]; then
+    OUTPUTDIR=$(realpath -m "$SCRIPT_PATH/../dist/webserver")
+    log_msg "output directory not specified. Building to default location ($OUTPUTDIR)"
+    mkdir -p $OUTPUTDIR || exit 1
+fi
+
+OUTPUTDIR=$(realpath "$OUTPUTDIR")
+
+if [ ! -d "$OUTPUTDIR" ]; then
+    log_err "the output directory ($OUTPUTDIR) doesn't exist"
+    exit 1
+fi
+OUTPUT_FE_DIR="$OUTPUTDIR/frontend"
+mkdir -p "$OUTPUT_FE_DIR" &&
+cd $SCRIPT_PATH &&
+./build-haskell-package npt-webapi &&
+./build-frontend "$OUTPUT_FE_DIR" || exit 1
+
+cd .. 
+
+log_msg "assembling the build into $OUTPUTDIR..."
+
+cp cabal-sandbox/bin/npt-webapi "$OUTPUTDIR" &&
+cp packages/npt-webapi/*.sample "$OUTPUTDIR" || exit 1
+
+log_msg "Done"
+
+
+

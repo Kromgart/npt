@@ -1,0 +1,307 @@
+
+src/NPT/WebAPI/APIServer.hs:71:29: error:
+    • Couldn't match type ‘ReaderT
+                             ST.AppState
+                             (ExceptT DAT.DataError IO)
+                             [DAT.KeyedObject NPT.Data.Resource.Resource]
+                           :<|> ((ReaderT
+                                    ST.AppState
+                                    (ExceptT DAT.DataError IO)
+                                    [DAT.KeyedObject NPT.Data.Project.Project]
+                                  :<|> (NPT.Data.Project.Project
+                                        -> ReaderT
+                                             ST.AppState
+                                             (ExceptT DAT.DataError IO)
+                                             NPT.Data.Project.ProjectId))
+                                 :<|> (t0 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                                        NPT.Data.GroupType.GroupType]
+                                       :<|> (t1 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                                              NPT.Data.Group.Group]
+                                             :<|> ((t2 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                                                     NPT.Data.WorkOrder.WorkOrder]
+                                                    :<|> ((NPT.Data.WorkOrder.WorkOrder
+                                                           -> t3 (ExceptT
+                                                                    DAT.DataError
+                                                                    IO) NPT.Data.WorkOrder.WorkOrderId)
+                                                          :<|> ((NPT.Data.WorkOrder.WorkOrderId
+                                                                 -> NPT.Data.WorkOrder.WorkOrder
+                                                                 -> t4 (ExceptT
+                                                                          DAT.DataError IO) ())
+                                                                :<|> (NPT.Data.WorkOrder.WorkOrderId
+                                                                      -> t5 (ExceptT
+                                                                               DAT.DataError
+                                                                               IO) ()))))
+                                                   :<|> (((Day
+                                                           -> Day
+                                                           -> t6 (ExceptT
+                                                                    DAT.DataError
+                                                                    IO) [DAT.KeyedObject
+                                                                           NPT.Data.Booking.Booking])
+                                                          :<|> ((NPT.Data.Booking.BookingId
+                                                                 -> NPT.Data.Booking.Booking
+                                                                 -> t7 (ExceptT
+                                                                          DAT.DataError IO) ())
+                                                                :<|> ((NPT.Data.Booking.BookingId
+                                                                       -> t8 (ExceptT
+                                                                                DAT.DataError
+                                                                                IO) ())
+                                                                      :<|> (NPT.Data.Booking.Booking
+                                                                            -> t9 (ExceptT
+                                                                                     DAT.DataError
+                                                                                     IO) NPT.Data.Booking.BookingId))))
+                                                         :<|> ((Day
+                                                                -> Day
+                                                                -> ReaderT
+                                                                     t10
+                                                                     (ExceptT DAT.DataError IO)
+                                                                     [NPT.Data.ResourcePlanningTable.PlanResRow])
+                                                               :<|> ((Day
+                                                                      -> Day
+                                                                      -> ReaderT
+                                                                           t11
+                                                                           (ExceptT
+                                                                              DAT.DataError IO)
+                                                                           [NPT.Data.WorkOrdersTable.WORow])
+                                                                     :<|> (Day
+                                                                           -> Day
+                                                                           -> [NPT.Data.Group.GroupId]
+                                                                           -> ReaderT
+                                                                                t12
+                                                                                (ExceptT
+                                                                                   DAT.DataError IO)
+                                                                                [NPT.Data.WorkOrdersExecutiveTable.WOExRow]))))))))’
+                     with ‘Servant.Auth.Server.Internal.Types.AuthResult
+                             AUTH.AuthTokenData
+                           -> ReaderT
+                                ST.AppState
+                                (ExceptT DAT.DataError IO)
+                                [DAT.KeyedObject NPT.Data.Resource.Resource]
+                              :<|> ((ReaderT
+                                       ST.AppState
+                                       (ExceptT DAT.DataError IO)
+                                       [DAT.KeyedObject NPT.Data.Project.Project]
+                                     :<|> (NPT.Data.Project.Project
+                                           -> ReaderT
+                                                ST.AppState
+                                                (ExceptT DAT.DataError IO)
+                                                (NPT.Data.DataId.DataId NPT.Data.Project.Project)))
+                                    :<|> (ReaderT
+                                            ST.AppState
+                                            (ExceptT DAT.DataError IO)
+                                            [DAT.KeyedObject NPT.Data.GroupType.GroupType]
+                                          :<|> (ReaderT
+                                                  ST.AppState
+                                                  (ExceptT DAT.DataError IO)
+                                                  [DAT.KeyedObject NPT.Data.Group.Group]
+                                                :<|> ((ReaderT
+                                                         ST.AppState
+                                                         (ExceptT DAT.DataError IO)
+                                                         [DAT.KeyedObject
+                                                            NPT.Data.WorkOrder.WorkOrder]
+                                                       :<|> ((NPT.Data.WorkOrder.WorkOrder
+                                                              -> ReaderT
+                                                                   ST.AppState
+                                                                   (ExceptT DAT.DataError IO)
+                                                                   (NPT.Data.DataId.DataId
+                                                                      NPT.Data.WorkOrder.WorkOrder))
+                                                             :<|> ((NPT.Data.DataId.DataId
+                                                                      NPT.Data.WorkOrder.WorkOrder
+                                                                    -> NPT.Data.WorkOrder.WorkOrder
+                                                                    -> ReaderT
+                                                                         ST.AppState
+                                                                         (ExceptT DAT.DataError IO)
+                                                                         ())
+                                                                   :<|> (NPT.Data.DataId.DataId
+                                                                           NPT.Data.WorkOrder.WorkOrder
+                                                                         -> ReaderT
+                                                                              ST.AppState
+                                                                              (ExceptT
+                                                                                 DAT.DataError IO)
+                                                                              ()))))
+                                                      :<|> (((Day
+                                                              -> Day
+                                                              -> ReaderT
+                                                                   ST.AppState
+                                                                   (ExceptT DAT.DataError IO)
+                                                                   [DAT.KeyedObject
+                                                                      NPT.Data.Booking.Booking])
+                                                             :<|> ((NPT.Data.DataId.DataId
+                                                                      NPT.Data.Booking.Booking
+                                                                    -> NPT.Data.Booking.Booking
+                                                                    -> ReaderT
+                                                                         ST.AppState
+                                                                         (ExceptT DAT.DataError IO)
+                                                                         ())
+                                                                   :<|> ((NPT.Data.DataId.DataId
+                                                                            NPT.Data.Booking.Booking
+                                                                          -> ReaderT
+                                                                               ST.AppState
+                                                                               (ExceptT
+                                                                                  DAT.DataError IO)
+                                                                               ())
+                                                                         :<|> (NPT.Data.Booking.Booking
+                                                                               -> ReaderT
+                                                                                    ST.AppState
+                                                                                    (ExceptT
+                                                                                       DAT.DataError
+                                                                                       IO)
+                                                                                    (NPT.Data.DataId.DataId
+                                                                                       NPT.Data.Booking.Booking)))))
+                                                            :<|> ((Day
+                                                                   -> Day
+                                                                   -> ReaderT
+                                                                        ST.AppState
+                                                                        (ExceptT DAT.DataError IO)
+                                                                        [NPT.Data.ResourcePlanningTable.PlanResRow])
+                                                                  :<|> ((Day
+                                                                         -> Day
+                                                                         -> ReaderT
+                                                                              ST.AppState
+                                                                              (ExceptT
+                                                                                 DAT.DataError IO)
+                                                                              [NPT.Data.WorkOrdersTable.WORow])
+                                                                        :<|> (Day
+                                                                              -> Day
+                                                                              -> [NPT.Data.Group.GroupId]
+                                                                              -> ReaderT
+                                                                                   ST.AppState
+                                                                                   (ExceptT
+                                                                                      DAT.DataError
+                                                                                      IO)
+                                                                                   [NPT.Data.WorkOrdersExecutiveTable.WOExRow]))))))))’
+      Expected type: ServerT
+                       T.NPTWebAPI (ReaderT ST.AppState (ExceptT DAT.DataError IO))
+        Actual type: (AUTH.Creds
+                      -> ReaderT
+                           ST.AppState (ExceptT DAT.DataError IO) Data.Text.Internal.Text)
+                     :<|> (ReaderT
+                             ST.AppState
+                             (ExceptT DAT.DataError IO)
+                             [DAT.KeyedObject NPT.Data.Resource.Resource]
+                           :<|> ((ReaderT
+                                    ST.AppState
+                                    (ExceptT DAT.DataError IO)
+                                    [DAT.KeyedObject NPT.Data.Project.Project]
+                                  :<|> (NPT.Data.Project.Project
+                                        -> ReaderT
+                                             ST.AppState
+                                             (ExceptT DAT.DataError IO)
+                                             NPT.Data.Project.ProjectId))
+                                 :<|> (t0 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                                        NPT.Data.GroupType.GroupType]
+                                       :<|> (t1 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                                              NPT.Data.Group.Group]
+                                             :<|> ((t2 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                                                     NPT.Data.WorkOrder.WorkOrder]
+                                                    :<|> ((NPT.Data.WorkOrder.WorkOrder
+                                                           -> t3 (ExceptT
+                                                                    DAT.DataError
+                                                                    IO) NPT.Data.WorkOrder.WorkOrderId)
+                                                          :<|> ((NPT.Data.WorkOrder.WorkOrderId
+                                                                 -> NPT.Data.WorkOrder.WorkOrder
+                                                                 -> t4 (ExceptT
+                                                                          DAT.DataError IO) ())
+                                                                :<|> (NPT.Data.WorkOrder.WorkOrderId
+                                                                      -> t5 (ExceptT
+                                                                               DAT.DataError
+                                                                               IO) ()))))
+                                                   :<|> (((Day
+                                                           -> Day
+                                                           -> t6 (ExceptT
+                                                                    DAT.DataError
+                                                                    IO) [DAT.KeyedObject
+                                                                           NPT.Data.Booking.Booking])
+                                                          :<|> ((NPT.Data.Booking.BookingId
+                                                                 -> NPT.Data.Booking.Booking
+                                                                 -> t7 (ExceptT
+                                                                          DAT.DataError IO) ())
+                                                                :<|> ((NPT.Data.Booking.BookingId
+                                                                       -> t8 (ExceptT
+                                                                                DAT.DataError
+                                                                                IO) ())
+                                                                      :<|> (NPT.Data.Booking.Booking
+                                                                            -> t9 (ExceptT
+                                                                                     DAT.DataError
+                                                                                     IO) NPT.Data.Booking.BookingId))))
+                                                         :<|> ((Day
+                                                                -> Day
+                                                                -> ReaderT
+                                                                     t10
+                                                                     (ExceptT DAT.DataError IO)
+                                                                     [NPT.Data.ResourcePlanningTable.PlanResRow])
+                                                               :<|> ((Day
+                                                                      -> Day
+                                                                      -> ReaderT
+                                                                           t11
+                                                                           (ExceptT
+                                                                              DAT.DataError IO)
+                                                                           [NPT.Data.WorkOrdersTable.WORow])
+                                                                     :<|> (Day
+                                                                           -> Day
+                                                                           -> [NPT.Data.Group.GroupId]
+                                                                           -> ReaderT
+                                                                                t12
+                                                                                (ExceptT
+                                                                                   DAT.DataError IO)
+                                                                                [NPT.Data.WorkOrdersExecutiveTable.WOExRow])))))))))
+    • In the expression:
+        srvLogin
+        :<|>
+          srvRes
+          :<|>
+            srvProj
+            :<|>
+              srvGrpTypes
+              :<|> srvGroups :<|> srvWOrders :<|> srvBookings :<|> srvTables
+      In an equation for ‘serverWebAPI’:
+          serverWebAPI
+            = srvLogin
+              :<|>
+                srvRes
+                :<|>
+                  srvProj
+                  :<|>
+                    srvGrpTypes
+                    :<|> srvGroups :<|> srvWOrders :<|> srvBookings :<|> srvTables
+      In an equation for ‘mkAPIServer’:
+          mkAPIServer appState cfg
+            = hoistServer (Proxy :: Proxy T.NPTWebAPI) toHandler serverWebAPI
+            where
+                toHandler ::
+                  (ReaderT ST.AppState (ExceptT DAT.DataError IO) a) -> Handler a
+                toHandler rdr = Handler $ toServantErr $ runReaderT rdr appState
+                conString :: DAT.ConnectionString
+                conString = DAT.mkConnectionString $ CFG.dbSettings cfg
+                ....
+    • Relevant bindings include
+        srvBookings :: (Day
+                        -> Day
+                        -> t6 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                            NPT.Data.Booking.Booking])
+                       :<|> ((NPT.Data.Booking.BookingId
+                              -> NPT.Data.Booking.Booking -> t7 (ExceptT DAT.DataError IO) ())
+                             :<|> ((NPT.Data.Booking.BookingId
+                                    -> t8 (ExceptT DAT.DataError IO) ())
+                                   :<|> (NPT.Data.Booking.Booking
+                                         -> t9 (ExceptT
+                                                  DAT.DataError IO) NPT.Data.Booking.BookingId)))
+          (bound at src/NPT/WebAPI/APIServer.hs:110:9)
+        srvWOrders :: t2 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                       NPT.Data.WorkOrder.WorkOrder]
+                      :<|> ((NPT.Data.WorkOrder.WorkOrder
+                             -> t3 (ExceptT DAT.DataError IO) NPT.Data.WorkOrder.WorkOrderId)
+                            :<|> ((NPT.Data.WorkOrder.WorkOrderId
+                                   -> NPT.Data.WorkOrder.WorkOrder
+                                   -> t4 (ExceptT DAT.DataError IO) ())
+                                  :<|> (NPT.Data.WorkOrder.WorkOrderId
+                                        -> t5 (ExceptT DAT.DataError IO) ())))
+          (bound at src/NPT/WebAPI/APIServer.hs:103:9)
+        srvWOrdersGet :: t2 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                          NPT.Data.WorkOrder.WorkOrder]
+          (bound at src/NPT/WebAPI/APIServer.hs:104:9)
+        srvGroups :: t1 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                      NPT.Data.Group.Group]
+          (bound at src/NPT/WebAPI/APIServer.hs:100:9)
+        srvGrpTypes :: t0 (ExceptT DAT.DataError IO) [DAT.KeyedObject
+                                                        NPT.Data.GroupType.GroupType]
+          (bound at src/NPT/WebAPI/APIServer.hs:97:9)

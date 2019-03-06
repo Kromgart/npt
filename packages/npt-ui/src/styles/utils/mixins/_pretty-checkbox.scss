@@ -1,0 +1,77 @@
+// iOS-like checkbox. html structure (label > input:checkbox + div)
+@mixin pretty-checkbox($chk-width, $chk-slider-size, $base-color, $from-color, $to-color) {
+    position: relative;
+
+    display: block;
+
+    width: $chk-width;
+    height: $chk-slider-size;
+
+    cursor: pointer;
+
+    input[type='checkbox'] {
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+        opacity: 0;
+        border-style: none;
+    }
+
+    div {
+        position: relative;
+
+        overflow: hidden;
+
+        width: $chk-width;
+        height: $chk-slider-size;
+
+        border-radius: 8px;
+
+        &:before,
+        &:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            box-sizing: border-box;
+            height: $chk-slider-size;
+
+            content: '';
+
+            border: 2px solid $from-color;
+            border-radius: 8px;
+            background-color: $base-color;
+        }
+
+        &:before {
+            width: $chk-width;
+
+            transition: background-color ease-out .2s, border-color ease-out .2s;
+        }
+
+        &:after {
+            width: $chk-slider-size;
+
+            transition: margin-left ease-out .2s, border-color ease-out .2s;
+        }
+    }
+
+    input[type='checkbox']:checked + div:before {
+        border-color: $to-color;
+        background-color: $to-color;
+    }
+
+    input[type='checkbox']:checked + div:after {
+        margin-left: $chk-width - $chk-slider-size;
+
+        border-color: $to-color;
+    }
+
+    input[type='checkbox']:focus + div {
+        box-shadow: 0 0 3px $base-npt-light;
+    }
+}

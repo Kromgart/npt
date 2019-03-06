@@ -1,0 +1,9 @@
+:set -w
+:set prompt "> "
+import Control.Monad.Trans.Except (runExceptT)
+import Data.Time.Calendar (fromGregorian)
+import Data.Time.Clock (UTCTime (..), getCurrentTime)
+import Data.Time.LocalTime (TimeOfDay (..), timeOfDayToTime)
+:l shell/Helpers.hs
+import Helpers
+

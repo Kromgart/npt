@@ -1,0 +1,39 @@
+#!/bin/bash
+
+PROJECT_ROOT=$(realpath "${0%/*}/..")
+
+SBOX_PATH="$PROJECT_ROOT/cabal-sandbox"
+
+#echo $PROJECT_ROOT
+#echo $SBOX_PATH
+#exit
+
+mkdir $SBOX_PATH &&
+cd $SBOX_PATH &&
+cabal sandbox init --sandbox . &&
+
+
+cd "$PROJECT_ROOT/packages" &&
+
+cd npt-core &&
+cabal sandbox init --sandbox "$SBOX_PATH" &&
+cabal install directory-1.3.1.5 &&
+cd .. &&
+
+cd npt-bamboohr &&
+cabal sandbox init --sandbox "$SBOX_PATH" &&
+cabal sandbox add-source '../npt-core' &&
+cd .. &&
+
+cd npt-webapi &&
+cabal sandbox init --sandbox "$SBOX_PATH" &&
+cabal sandbox add-source '../npt-core' &&
+cd ..  &&
+
+cd npt-gemini &&
+cabal sandbox init --sandbox "$SBOX_PATH" &&
+cabal sandbox add-source '../npt-core' &&
+cd .. 
+
+
+

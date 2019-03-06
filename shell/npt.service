@@ -1,0 +1,11 @@
+[Unit]
+Description=NPT webserver
+Requires=networking.service
+After=networking.service
+
+[Service]
+ExecStart=/opt/npt/webserver/npt-webapi
+WorkingDirectory=/opt/npt/webserver
+
+[Install]
+WantedBy=multi-user.target

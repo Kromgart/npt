@@ -1,0 +1,29 @@
+@import '../functions/opposite-position';
+
+//triangle arrow size = (bigest edge)/2, multiplier = triangle height
+@mixin simple-arrow($size, $multiplier, $direction, $color) {
+    $perpendicular-borders: $size solid transparent;
+
+    z-index: 2;
+
+    width: 0;
+    height: 0;
+
+    content: '';
+
+    border-style: none;
+
+    border-#{opposite-position($direction)}: round($size * $multiplier) solid $color;
+
+    @if not index(top right bottom left, $direction) {
+        @error 'Direction must be either `top`, `right`, `bottom` or `left`.';
+    }
+
+    @if $direction == top or $direction == bottom {
+        border-right: $perpendicular-borders;
+        border-left: $perpendicular-borders;
+    } @else if $direction == right or $direction == left {
+        border-top: $perpendicular-borders;
+        border-bottom: $perpendicular-borders;
+    }
+}

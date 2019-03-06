@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+curl -H "Accept: */*" \
+     -H "Accept-Encoding: gzip, deflate, br" \
+     -H "Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,de;q=0.2,nb;q=0.2,nl;q=0.2" \
+     -H "Access-Control-Request-Headers: content-type" \
+     -H "Access-Control-Request-Method: POST" \
+     -H "Origin: http://localhost:8000" \
+     -H "Content-Type: application/json" \
+     -X OPTIONS \
+     --data '{"resourceId": 1, "bookDate" :"2017-09-05", "projectId" : 1, "amount": 397}' \
+     http://127.0.0.1:8081/api/v1/bookings/2 -v

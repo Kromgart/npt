@@ -1,0 +1,29 @@
+#! /bin/bash
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+SCRIPT_PATH=$(realpath ${0%/*})
+NPT_INSTALL_PATH='/opt/npt/webserver'
+NPT_BUILD_PATH='/var/tmp/npt/webserver'
+
+cd $SCRIPT_PATH 
+
+log_msg "starting the build..."
+
+rm -rf $NPT_BUILD_PATH &&
+mkdir -p $NPT_BUILD_PATH &&
+./make-webserver $NPT_BUILD_PATH &&
+cp ./npt.service $NPT_BUILD_PATH || exit 1
+
+log_msg "installing the service..."
+
+sudo ./install-service "$NPT_BUILD_PATH" "$NPT_INSTALL_PATH" "npt"
+

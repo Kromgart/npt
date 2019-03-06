@@ -1,0 +1,88 @@
+#! /bin/bash
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+SCRIPT_PATH=$(realpath ${0%/*})
+OUTPUTDIR="$1"
+LOCK_PATH="$2"
+EXE_NAME="$3"
+
+if [ -z "$OUTPUTDIR" ]; then
+    OUTPUTDIR=$(realpath -m "$SCRIPT_PATH/../dist/gemini")
+    log_msg "output directory not specified. Building to default location ($OUTPUTDIR)"
+    rm -rf $OUTPUTDIR &&
+    mkdir -p $OUTPUTDIR || exit 1
+fi
+
+OUTPUTDIR=$(realpath "$OUTPUTDIR")
+
+if [ ! -d "$OUTPUTDIR" ]; then
+    log_err "the output directory ($OUTPUTDIR) doesn't exist"
+    exit 1
+fi
+
+if [ -z "$LOCK_PATH" ]; then
+    LOCK_PATH="/tmp/npt/geminiimport.lock"
+    log_msg "lock file not specified. Scripts will be generated for default lock ($LOCK_PATH)"
+fi
+
+if [ -z "$EXE_NAME" ]; then
+    EXE_NAME="npt-gemini-import"
+    log_msg "import executable not specified. Using default ($EXE_NAME)"
+fi
+
+
+cd $SCRIPT_PATH
+
+PACKAGE_NAME="npt-gemini"
+
+./build-haskell-package $PACKAGE_NAME || exit 1
+
+cd .. 
+
+log_msg "assembling the build into $OUTPUTDIR..."
+
+cp "cabal-sandbox/bin/$EXE_NAME" $OUTPUTDIR &&
+cp packages/$PACKAGE_NAME/*.sample $OUTPUTDIR || exit 1
+
+
+RUNIMPORT_SCRIPT="$OUTPUTDIR/runimport"
+
+log_msg "Generating the '$RUNIMPORT_SCRIPT' script..."
+
+echo "#!/bin/bash
+SCRIPT_PATH=\$(realpath \${0%/*})
+
+START_DATE=\$1
+
+cd \$SCRIPT_PATH &&
+mkdir -p ${LOCK_PATH%/*} &&
+echo \"Obtaining lock $LOCK_PATH...\" &&
+
+( flock -n 8 || { echo \"Cannot obtain lock $LOCK_PATH\"; exit 1; }
+echo \"Executing import ($EXE_NAME)...\"
+{ if [ -z \$START_DATE ]
+  then
+    ./$EXE_NAME 
+  else
+    ./$EXE_NAME \"\$START_DATE\"
+  fi
+} && echo 'Import finished'
+) 8>$LOCK_PATH
+" > $RUNIMPORT_SCRIPT &&
+
+chmod +x $RUNIMPORT_SCRIPT || exit 1
+
+
+log_msg "done"
+
+
+

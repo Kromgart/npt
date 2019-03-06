@@ -1,0 +1,30 @@
+#! /bin/bash
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+SCRIPT_PATH=$(realpath ${0%/*})
+
+NPT_INSTALL_PATH='/opt/npt/bamboohr'
+NPT_BUILD_PATH='/var/tmp/npt/bamboohr'
+NPT_LOCK_PATH='/tmp/npt/bambooimport.lock'
+NPT_IMPORT_EXE='npt-bamboohr-import'
+
+
+cd $SCRIPT_PATH 
+
+log_msg "starting the build..."
+
+rm -rf $NPT_BUILD_PATH &&
+mkdir -p $NPT_BUILD_PATH &&
+./make-bamboohr $NPT_BUILD_PATH $NPT_LOCK_PATH $NPT_IMPORT_EXE &&
+sudo ./install-job $NPT_BUILD_PATH $NPT_INSTALL_PATH "$SCRIPT_PATH/bamboohr_crontab" $NPT_LOCK_PATH
+
+

@@ -1,0 +1,6 @@
+elm-stuff/
+node_modules/
+npm-debug.log
+
+frontend/elm.js
+frontend/main.css

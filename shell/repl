@@ -1,0 +1,1 @@
+clear && cabal repl --ghc-options="-ghci-script=shell/.ghci shell/Helpers.hs"

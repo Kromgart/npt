@@ -1,0 +1,61 @@
+@import '../../styles/_variables';
+@import '../../styles/utils/mixins/simple-arrow';
+@import '../../styles/blocks';
+@import '~daterangepicker/daterangepicker.scss';
+
+.daterangepicker {
+    display: none;
+
+    margin-top: 8px !important;
+
+    @extend .dropdown;
+
+    .table-condensed {
+        border-collapse: collapse;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    td {
+        font-weight: normal;
+
+        height: 35px;
+        padding: 0 8px;
+
+        color: #363636;
+
+        &.active {
+            background-color: #3ca5d3;
+        }
+    }
+
+    .range_inputs {
+        overflow: hidden;
+
+        .btn {
+            font-size: 14px;
+
+            float: left;
+
+            width: 52px;
+            height: 30px;
+            margin-right: 3px;
+
+            cursor: pointer;
+
+            border-style: none;
+            border-radius: 3px;
+
+            &.applyBtn {
+                background-color: $base-npt-light;
+            }
+
+            &.cancelBtn {
+                border: 1px solid $bg-light-gray;
+                background-color: $bg-base-white;
+            }
+        }
+    }
+}

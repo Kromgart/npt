@@ -1,0 +1,56 @@
+#! /bin/bash
+
+# Consider using password file if it's annoying for you to type in your password multiple times:
+# https://www.postgresql.org/docs/9.6/static/libpq-pgpass.html
+#
+# Arguments:
+# $1 - Postgres user
+# $2 - Name of database to create
+# $3 - Postgres hostname
+# $4 - Postgres port
+#
+# Example: $: ./init-new-db vby ScriptTest srv04 5432
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+SCRIPT_PATH=$(realpath ${0%/*})
+
+cd $SCRIPT_PATH
+
+
+#BAMBOOHR_PATH=$(realpath "../dist/bamboohr")
+#if [ ! -f "$BAMBOOHR_PATH/runimport" ]; then
+#  log_err "bamboohr import not found. Ensure that it is built and has proper config in $BAMBOOHR_PATH"
+#  exit 1
+#fi
+
+#GEMINI_PATH=$(realpath "../dist/gemini")
+#if [ ! -f "$GEMINI_PATH/runimport" ]; then
+#  log_err "gemini import not found. Ensure that it is built and has proper config in $GEMINI_PATH"
+#  exit 1
+#fi
+
+DBNAME=$2
+PSQL_PARAMS="-h $3 -p $4 -U $1"
+
+log_msg "Creating new empty database $DBNAME..."
+createdb $PSQL_PARAMS $DBNAME && 
+log_msg "Database $DBNAME created" &&
+
+log_msg "Creating tables..." &&
+psql $PSQL_PARAMS -d $DBNAME -b -f "../db/mkdb.pgsql" || exit 1
+
+log_msg "Database $DBNAME is ready for import"
+
+#$BAMBOOHR_PATH/runimport && 
+#$GEMINI_PATH/runimport "2017-01-01 00:00:00" || exit 1
+
+

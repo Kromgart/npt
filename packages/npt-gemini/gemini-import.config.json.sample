@@ -1,0 +1,14 @@
+{
+  "database" : {
+    "host"     : "srv04",
+    "port"     : 5432,
+    "login"    : "npt",
+    "password" : "aoeu',.p",
+    "database" : "NPT1"
+  },
+
+  "gemini": {
+    "host"  : "srv02",
+    "port" : 8999
+  }
+}

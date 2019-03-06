@@ -1,0 +1,76 @@
+#! /bin/bash
+
+SOURCE_PATH="$1"
+TARGET_PATH="$2"
+CRONTAB_PATH="$3"
+LOCK_PATH="$4"
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+log_msg "starting..."
+
+if [ -z "$SOURCE_PATH" ] || [ -z "$TARGET_PATH" ] || [ -z "$CRONTAB_PATH" ] || [ -z "$LOCK_PATH" ]; then
+    log_err "missing arguments"
+    exit 1
+fi
+
+
+SOURCE_PATH=$(realpath -m "$SOURCE_PATH")
+if [ ! -d "$SOURCE_PATH" ]; then
+    log_err "source directory '$SOURCE_PATH' does not exist"
+    exit 1
+fi
+
+CRONTAB_PATH=$(realpath -m "$CRONTAB_PATH")
+if [ ! -f "$CRONTAB_PATH" ]; then
+    log_err "job's crontab file '$CRONTAB_PATH' does not exist"
+    exit 1
+fi
+
+
+TARGET_PATH=$(realpath -m "$TARGET_PATH")
+
+function get_path_base {
+    if [ -d $1 ]; then
+        echo $1
+    else
+        get_path_base "${1%/*}"
+    fi
+}
+
+if [ ! -w $(get_path_base $TARGET_PATH) ]; then
+    log_err "you do not have write permissions for target directory ($TARGET_PATH)"
+    exit 1
+fi
+
+CRONTAB_TARGET="/etc/cron.d"
+
+if [ ! -w $CRONTAB_TARGET ]; then
+    log_err "you do not have write permissions for cron jobs directory ($CRONTAB_TARGET)"
+    exit 1
+fi
+
+log_msg "obtaining lock..."
+
+( flock -w 10 9 || { log_err "cannot get lock ($LOCK_PATH)"; exit 1; }
+log_msg "copying files to target directory ($TARGET_PATH)..."
+
+#rm -rf $TARGET_PATH/*  &&
+mkdir -p $TARGET_PATH &&
+cp -r "$SOURCE_PATH/." $TARGET_PATH  || exit 1
+
+log_msg "copying crontab to $CRONTAB_TARGET..."
+cp "$CRONTAB_PATH" "$CRONTAB_TARGET"
+
+
+log_msg "cron job installed"
+) 9>$LOCK_PATH
+

@@ -1,0 +1,35 @@
+#! /bin/bash
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+SCRIPT_PATH=$(realpath ${0%/*})
+
+if [ -z "$1" ]; then
+    log_err "you must specify the haskell package to build (from the 'packages' directory)"
+    exit 1
+fi
+
+PACKAGE_NAME=$1
+PACKAGE_PATH=$(realpath "$SCRIPT_PATH/../packages/$PACKAGE_NAME")
+
+cd $PACKAGE_PATH || exit 1
+
+if [ ! -f *.cabal ]; then
+    log_err "no .cabal file in the directory for the specified package ($PACKAGE_PATH)"
+    exit 1
+fi    
+
+cabal clean || exit 1
+cabal install --dep --avoid-reinstalls &&
+#cabal build # --ghc-options="-j -O2" && 
+cabal install --avoid-reinstalls &&
+cat `ls -t -F1 $SCRIPT_PATH/../cabal-sandbox/logs/$PACKAGE_NAME-*.log | head -n1`  || exit 1
+

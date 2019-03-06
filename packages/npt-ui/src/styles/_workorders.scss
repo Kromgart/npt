@@ -1,0 +1,436 @@
+.btn-new-workorder {
+    font-size: 14px;
+    font-weight: bold;
+
+    display: inline-block;
+
+    content: '';
+    cursor: pointer;
+    text-transform: uppercase;
+
+    color: $base-npt-light;
+    border-style: none;
+    background: none;
+}
+
+.workorders-table-holder {
+    .collapsible-section {
+        position: relative;
+        z-index: 9;
+
+        display: table;
+
+        vertical-align: top;
+
+        .opener {
+            display: block;
+
+            width: 100%;
+            padding: 0;
+
+            cursor: pointer;
+            text-align: left;
+            text-decoration: none;
+
+            color: $f-base-dark;
+            border-style: none;
+            background-color: rgba($bg-gray, .25);
+            box-shadow: none;
+
+
+            span {
+                font-weight: bold;
+                line-height: 25px;
+
+                display: block;
+                overflow: hidden;
+
+                box-sizing: border-box;
+                width: 220px;
+                padding: 0 10px;
+
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                background-color: $bg-gray;
+            }
+        }
+        .collapsible-content {
+            overflow: hidden;
+        }
+    }
+
+    .workorders-table {
+        width: auto;
+        min-width: 100%;
+
+        table-layout: fixed;
+        border-spacing: 0;
+
+        background: $bg-base-white;
+    }
+
+    .scrolling-table-header,
+    .scrolling-table-footer {
+        font-weight: bold;
+
+        padding-left: 220px;
+
+        th,
+        td {
+            overflow: hidden;
+
+            width: 190px;
+            min-width: 190px;
+            max-width: 190px;
+            padding: 0 10px;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            &.project-name-cell {
+                position: absolute;
+                left: 0;
+
+                overflow: visible;
+
+                min-width: 220px;
+                max-width: 220px;
+                height: 35px;
+
+                border-left-style: none; //border-right: 2px solid $bg-base-white;
+            }
+        }
+    }
+
+    .scrolling-table-sidebar {
+        width: 220px;
+
+        background-color: $bg-table-dark;
+    }
+
+    .scrolling-table-sidebar,
+    .scrolling-table-body {
+        tr:nth-child(2n) {
+            background: $bg-mid-gray;
+        }
+        tr:last-child td {
+            border-bottom: 1px solid $bg-light-gray;
+        }
+
+        th {
+            font-weight: normal;
+
+            overflow: hidden;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        td {
+            overflow: hidden;
+
+            width: 190px;
+            min-width: 190px;
+            max-width: 190px;
+            padding: 0 10px;
+
+            text-align: left;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            color: $f-base-dark;
+            border-top: 1px solid $bg-light-gray;
+        }
+
+        th,
+        td {
+            height: 1px;
+        }
+
+        .person-photo {
+            display: inline-block;
+
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+
+            vertical-align: middle;
+
+            border-radius: 50%;
+            background-color: $bg-light-gray;
+        }
+
+        .actions-cell {
+            font-size: 24px;
+
+            width: 100%;
+            min-width: 100px !important;
+            max-width: 1005px !important;
+
+            text-align: center;
+
+            .btn {
+                font-size: inherit;
+                line-height: 1;
+
+                display: inline-block;
+
+                width: auto;
+                height: auto;
+                margin: 0 8px;
+                padding: 0;
+
+                cursor: pointer;
+
+                border-style: none;
+                background: none;
+
+                &.disabled .fa-check {
+                    color: $f-non-editable;
+                }
+
+                .fa-check {
+                    color: $f-ok;
+                }
+
+                .fa-times {
+                    color: $f-error;
+                }
+
+                .fa-trash {
+                    color: $f-message;
+                }
+            }
+        }
+        tfoot {
+            font-weight: bold;
+            th,
+            td {
+                border-top-style: none;
+            }
+            th.project-name-cell {
+                font-weight: bold;
+
+                color: $f-message;
+            }
+        }
+    }
+    .scrolling-table-footer {
+        td {
+            border-top: 1px solid $bg-light-gray !important;
+        }
+    }
+
+    .workorder-new-row {
+        font-style: italic;
+    }
+
+    .project-name-cell {
+        width: 220px;
+        min-width: 220px;
+        max-width: 220px;
+        padding: 10px;
+
+        text-align: left;
+
+        color: $f-base-light;
+        border-top: 1px solid $bg-dark-gray;
+        background-color: $bg-table-dark;
+
+        .project-name {
+            display: inline-block;
+            overflow: hidden;
+
+            max-width: 170px;
+
+            vertical-align: top;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .efficiency-chart {
+            position: relative;
+
+            display: inline-block;
+
+            margin-right: 10px;
+
+            vertical-align: middle;
+
+            .indicator {
+                $indicator-size: 12px;
+
+                position: absolute;
+                right: 0;
+                bottom: 0;
+
+                box-sizing: border-box;
+                width: $indicator-size;
+                height: $indicator-size;
+
+                border: 2px solid $bg-base-white;
+                border-radius: 50%;
+            }
+
+            .tooltip {
+                font-size: $fsize-small;
+                line-height: 22px;
+
+                position: absolute;
+                top: 8px;
+                left: 100%;
+
+                display: none;
+
+                height: 22px;
+                margin-left: 12px;
+                padding: 0 6px;
+
+                color: $f-base-dark;
+                border: 1px solid #adadad;
+                border-radius: 2px;
+                background: $bg-base-white;
+                box-shadow: 0 3px 7px rgba(0, 0, 0, .35);
+
+                &:before {
+                    position: absolute;
+                    top: 50%;
+
+                    margin-top: -5px;
+                    margin-left: -12px;
+
+                    @include simple-arrow(5px, 1.1, left, $bg-base-white);
+                }
+            }
+            &:hover .tooltip {
+                display: block;
+            }
+        }
+    }
+
+    tr:last-child .project-name-cell {
+        border-bottom: 1px solid $bg-dark-gray;
+    }
+
+
+
+    .read-only-cell {
+        color: $f-message !important;
+    }
+
+    .important-cell {
+        background-color: $bg-important;
+    }
+
+    .main-cell {
+        color: $f-base-light !important;
+        background-color: $bg-highlight;
+    }
+
+    tr:nth-child(2n) .important-cell {
+        background-color: mix($bg-important, $bg-dark-gray, 97%);
+    }
+
+    tr:nth-child(2n) .main-cell {
+        background-color: mix($bg-highlight, $bg-dark-gray, 97%);
+    }
+
+    .select-project-holder {
+        $burger-size: 16px;
+
+        line-height: $burger-size;
+
+        position: relative;
+
+        float: right;
+
+        width: $burger-size;
+        height: $burger-size;
+        margin-top: 11px;
+        margin-left: 5px;
+
+        .select-project-btn {
+            cursor: pointer;
+        }
+    }
+
+    .pretty-checkbox {
+        margin-left: 20px;
+
+        @include pretty-checkbox(28px, 17px, $bg-base-white, $f-error, $f-ok);
+    }
+
+    .content-filter {
+        line-height: 20px;
+
+        position: absolute;
+        top: 7px;
+        right: 10px;
+    }
+
+    &.executive {
+        .scrolling-table-sidebar {
+            bottom: 82px !important;
+        }
+        .scrolling-table-body {
+            bottom: 68px !important;
+        }
+        .group-start-cell,
+        .group-total-cell {
+            position: relative;
+
+            overflow: visible;
+
+            border-left-width: 4px !important;
+
+            &:before {
+                position: absolute;
+                top: -1px;
+                bottom: -1px;
+                left: -4px;
+
+                content: '';
+
+                border-left: 4px solid $base-npt-dark;
+            }
+        }
+        .group-total-cell {
+            border-color: $bg-table-dark !important;
+            background-color: $bg-table-dark !important;
+
+            div {
+                display: flex;
+
+                width: 100%;
+
+                text-align: center;
+
+                flex-wrap: nowrap;
+                justify-content: space-around;
+
+
+
+                span {
+                    display: block;
+                }
+            }
+        }
+        .scrolling-table-footer {
+            .group-start-cell:before,
+            .group-total-cell:before {
+                bottom: 0;
+            }
+        }
+        .scrolling-table-header .group-start-cell:before {
+            bottom: 0;
+        }
+        .super-footer-row {
+            td {
+                color: $f-base-light;
+                background-color: #737373;
+            }
+        }
+    }
+}

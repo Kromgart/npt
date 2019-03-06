@@ -1,0 +1,59 @@
+#! /bin/bash
+
+SOURCE_PATH="$1"
+TARGET_PATH="$2"
+SERVICE_NAME="$3"
+
+SCRIPT_NAME=$(basename $0)
+
+function log_msg {
+    echo "$SCRIPT_NAME: $1"
+}
+
+function log_err {
+    log_msg "error: $1"
+}
+
+if [ -z "$SOURCE_PATH" ] || [ -z "$TARGET_PATH" ] || [ -z "$SERVICE_NAME" ]; then
+    log_err "missing arguments"
+    exit 1
+fi
+
+SOURCE_PATH=$(realpath -m "$SOURCE_PATH")
+if [ ! -d "$SOURCE_PATH" ]; then
+    log_err "source directory '$SOURCE_PATH' does not exist"
+    exit 1
+fi
+
+SERVICE_FILE_PATH=$(realpath -m "$SOURCE_PATH/$SERVICE_NAME.service")
+if [ ! -f "$SERVICE_FILE_PATH" ]; then
+    log_err "service definition file '$SERVICE_FILE_PATH' does not exist"
+    exit 1
+fi
+
+
+TARGET_PATH=$(realpath -m "$TARGET_PATH")
+
+
+if [ "$(systemctl is-active $SERVICE_NAME)" = "active" ]; then
+    log_msg "the $SERVICE_NAME service is running. Disabling it..."
+
+    systemctl --now disable "$SERVICE_NAME.service" || { rm "/etc/systemd/system/$SERVICE_NAME.service" && systemctl daemon-reload; } || exit 1
+fi
+
+
+#rm -rf $TARGET_PATH  &&
+mkdir -p $TARGET_PATH &&
+cp -r "$SOURCE_PATH/." $TARGET_PATH  || exit 1
+
+
+log_msg "enabling and starting $SERVICE_NAME.service..."
+
+SERVICE_FILE_PATH=$(realpath -m "$TARGET_PATH/$SERVICE_NAME.service")
+
+systemctl enable $SERVICE_FILE_PATH || exit 1
+
+
+log_msg "Service installed to $TARGET_PATH. Update config file if needed."
+log_msg "To manage the service use the standard 'systemctl [start | stop | ...] $SERVICE_NAME' tool"
+
